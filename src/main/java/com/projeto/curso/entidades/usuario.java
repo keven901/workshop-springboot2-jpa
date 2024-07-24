@@ -1,12 +1,17 @@
 package com.projeto.curso.entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class usuario implements Serializable {
@@ -20,17 +25,21 @@ public class usuario implements Serializable {
 	private String telefone;
 	private String senha;
 	
+	@JsonIgnore	
+	@OneToMany(mappedBy = "cliente")
+	private List<pedido> pedidos = new ArrayList<>(); 	
+	
 	public usuario() {
 		
 	}
 
 	public usuario(Long id, String name, String email, String telefone, String senha) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.telefone = telefone;
 		this.senha = senha;
+		this.id = id;
 	}
 
 	public Long getId() {
@@ -73,6 +82,11 @@ public class usuario implements Serializable {
 		this.senha = senha;
 	}
 
+	public List<pedido> getPedidos() {
+		return pedidos;
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -89,5 +103,9 @@ public class usuario implements Serializable {
 		usuario other = (usuario) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	
+
+	
 	
 }
