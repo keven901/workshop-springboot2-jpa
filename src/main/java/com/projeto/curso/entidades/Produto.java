@@ -1,47 +1,44 @@
 package com.projeto.curso.entidades;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
-@Table(name = "tb_usuario")
-public class usuario implements Serializable {
+@Table(name = "tb_produto")
+public class Produto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private String email;
-	private String telefone;
-	private String senha;
+	private String descricao;
+	private Double preco;
+	private String imgUrl;
 	
-	@JsonIgnore	
-	@OneToMany(mappedBy = "cliente")
-	private List<pedido> pedidos = new ArrayList<>(); 	
+	@Transient
+	private Set<Categoria> categorias = new HashSet<>();
 	
-	public usuario() {
+	public Produto() {
 		
 	}
-
-	public usuario(Long id, String name, String email, String telefone, String senha) {
+	
+	public Produto(Long id, String name, String descricao, Double preco, String imgUrl) {
 		super();
-		this.name = name;
-		this.email = email;
-		this.telefone = telefone;
-		this.senha = senha;
 		this.id = id;
+		this.name = name;
+		this.descricao = descricao;
+		this.preco = preco;
+		this.imgUrl = imgUrl;
 	}
 
 	public Long getId() {
@@ -60,35 +57,36 @@ public class usuario implements Serializable {
 		this.name = name;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
-	public String getTelefone() {
-		return telefone;
+	public Double getPreco() {
+		return preco;
 	}
 
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+	public void setPreco(Double preco) {
+		this.preco = preco;
 	}
 
-	public String getSenha() {
-		return senha;
+	public String getImgUrl() {
+		return imgUrl;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
-	public List<pedido> getPedidos() {
-		return pedidos;
+	public Set<Categoria> getCategorias() {
+		return categorias;
 	}
+
 	
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -102,12 +100,19 @@ public class usuario implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		usuario other = (usuario) obj;
+		Produto other = (Produto) obj;
 		return Objects.equals(id, other.id);
 	}
 
 	
-
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
